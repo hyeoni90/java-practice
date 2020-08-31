@@ -1,5 +1,5 @@
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
+import java.util.stream.IntStream;
 
 /**
  * 같은 숫자는 싫어
@@ -8,27 +8,39 @@ import java.util.List;
 public class Solution12906 {
     public static void main(String[] args) {
         int[] arr = {1,1,3,3,0,1,1};
-        System.out.println(new Solution12906().solution(arr));
+        System.out.println(Arrays.toString(new Solution12906().solution(arr)));
     }
 
-    public int[] solution(int []arr) {
-        int beforeNum = -1;
-        List<Integer> numbers = new ArrayList<>();
+//    public int[] solution(int []arr) {
+//        int beforeNum = -1;
+//        List<Integer> numbers = new ArrayList<>();
+//
+//        for (int i = 0; i < arr.length; i++) {
+//            if (arr[i] != beforeNum)
+//                numbers.add(arr[i]);
+//            beforeNum = arr[i];
+//        }
+//
+//        int[] answer = new int[numbers.size()];
+//        for (int i = 0; i < numbers.size(); i++) {
+//            answer[i] = numbers.get(i);
+//        }
+//
+//        for(int i =0; i< answer.length; i++) {
+//            System.out.println(answer[i]);
+//        }
+//        return answer;
+//    }
 
-        for (int i = 0; i < arr.length; i++) {
-            if (arr[i] != beforeNum)
-                numbers.add(arr[i]);
-            beforeNum = arr[i];
-        }
-
-        int[] answer = new int[numbers.size()];
-        for (int i = 0; i < numbers.size(); i++) {
-            answer[i] = numbers.get(i);
-        }
-
-        for(int i =0; i< answer.length; i++) {
-            System.out.println(answer[i]);
-        }
-        return answer;
+    public int[] solution(int[] arr) {
+        return IntStream.range(0, arr.length)
+                .filter(num -> {
+                    if (num == 0) {
+                        return true;
+                    }
+                    return arr[num - 1] != arr[num];
+                })
+                .map(num -> arr[num])
+                .toArray();
     }
 }
